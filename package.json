@@ -1,0 +1,23 @@
+{
+  "author": "Igor Soarez <igorsoarez@gmail.com>",
+  "name": "express-ejs-layouts",
+  "description": "Layout support for ejs in express.",
+  "keywords": ["express", "layout", "ejs"],
+  "version": "0.1.0",
+  "main": "lib/express-layouts.js",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "3.0.X",
+    "ejs": "*",
+    "mocha": "*",
+    "should": "*"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": "git://github.com/Soarez/express-ejs-layouts.git"
+}

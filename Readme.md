@@ -1,0 +1,75 @@
+Layout support for ejs in express.
+
+## Installation
+    npm install express-ejs-layouts
+
+## Usage
+    var express = require('express')
+      , app = express()
+      , expressLayouts = require('express-ejs-layouts')
+    
+    app.set('view engine', 'ejs')
+    app.set('layout', 'myLayout') // defaults to 'layout'     
+
+    app.use(ejsLayoutSupport)
+    app.use(app.router)
+    
+    app.get('/', function(req, res){
+      res.render('aView', { layout: 'someSpecificLayout' })
+    })
+
+    app.listen(3000)
+
+## contentFor
+
+A view
+
+    somebody
+    <%- contentFor('foo') %>
+    club
+    <%- contentFor('bar') %>
+    fight
+
+With a layout
+
+    <%-bar%> <%-foo%>
+    <%-body%>
+
+Renders
+
+    fight club
+    somebody
+
+## script blocks extraction
+If you like to place all the script blocks at the end, you can do it like this:
+
+    app.set("layout parse scripts", true)
+
+A view
+
+    something<script>somejs<script>something
+
+With a layout
+
+    ...
+    <body>
+    <%- body %>
+    <%- scripts %>
+    </body>
+
+Renders
+
+    ...
+    <body>
+    somethingsomething
+    <script>somejs<script>
+    </body>
+
+Enabling invididually:
+
+    req.render('view', { parseScript: true })
+
+## Running tests
+Clone the rep
+
+    make test
