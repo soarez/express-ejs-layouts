@@ -11,7 +11,7 @@ Layout support for ejs in express.
     app.set('view engine', 'ejs')
     app.set('layout', 'myLayout') // defaults to 'layout'     
 
-    app.use(ejsLayoutSupport)
+    app.use(expressLayouts)
     app.use(app.router)
     
     app.get('/', function(req, res){
@@ -43,7 +43,7 @@ Renders
 ## script blocks extraction
 If you like to place all the script blocks at the end, you can do it like this:
 
-    app.set("layout parse scripts", true)
+    app.set("layout extractScripts", true)
 
 A view
 
