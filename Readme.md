@@ -54,7 +54,7 @@ With a layout
     ...
     <body>
     <%- body %>
-    <%- scripts %>
+    <%- script %>
     </body>
 
 Renders
