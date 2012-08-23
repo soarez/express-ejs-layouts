@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/Soarez/express-ejs-layouts.png)](http://travis-ci.org/Soarez/express-ejs-layouts)
 Layout support for ejs in express.
 
 ## Installation
