@@ -7,4 +7,4 @@ test:
 .PHONY: test
 
 watch: 
-	./node_modules/.bin/mocha --reporter min -w
+	./node_modules/.bin/mocha --reporter min -w --growl

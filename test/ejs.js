@@ -137,5 +137,16 @@ describe('rendering contentFor', function() {
       done()
     })
   })
+
+  it ('should provide the locals to the layout aswell', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/view.ejs', 
+        { layout: 'layoutWithMultipleContent', foo: 'oof', bar: 'rab' })
+    })
+    req(function(body){
+      body.should.equal('rab\\/oof\nhi')
+      done()
+    })
+  })
 })
 
