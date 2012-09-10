@@ -1,6 +1,6 @@
 var express = require('express')
   , expressLayouts = require('..')
-  , request = require('./support/http')
+  , request = require('supertest')
   , should = require('should')
 
 var app, req
@@ -10,8 +10,6 @@ beforeEach(function() {
   app.use(expressLayouts)
   app.set('view engine', 'ejs')
   app.set('views', __dirname + '/fixtures')
-
-  req = function(fn) { request(app).get('/').end(function(res) { fn(res.body) }) }
 })
 
 describe('not using layout', function() {
@@ -20,10 +18,8 @@ describe('not using layout', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs', { layout: false })
     })
-    req(function(body){
-      body.should.equal('hi')
-      done()
-    })
+
+    request(app).get('/').expect('hi', done)
   })
 
   it('should not use layouts if app.set("layout", false) and nothing was said in the view options', function(done) {
@@ -31,10 +27,8 @@ describe('not using layout', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs')
     })
-    req(function(body){
-      body.should.equal('hi')
-      done()
-    })
+
+    request(app).get('/').expect('hi', done)
   })
 })
 
@@ -43,10 +37,8 @@ describe('simple layout', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs')
     })
-    req(function(body){
-      body.should.equal('<p>hi</p>')
-      done()
-    })
+
+    request(app).get('/').expect('<p>hi</p>', done)
   })
 
   it('should use the layout specified in app.set("layout", "layoutName")', function(done) {
@@ -54,10 +46,8 @@ describe('simple layout', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs')
     })
-    req(function(body){
-      body.should.equal('<div>hi</div>')
-      done()
-    })
+
+    request(app).get('/').expect('<div>hi</div>', done)
   })
 
   it('should use the layout specified in the view options regarless of app.set("layout", ...)', function(done) {
@@ -65,10 +55,8 @@ describe('simple layout', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs', { layout: 'otherLayout' })
     })
-    req(function(body){
-      body.should.equal('<div>hi</div>')
-      done()
-    })
+
+    request(app).get('/').expect('<div>hi</div>', done)
   })
 })
 
@@ -77,10 +65,8 @@ describe('parsing scripts', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithScript.ejs', 'layoutWithScript')
     })
-    req(function(body){
-      body.should.equal('<p>contentb4<script href="http://mischief.fc/mayhem.js">soap()</script>contentafter</p>')
-      done()
-    })
+
+    request(app).get('/').expect('<p>contentb4<script href="http://mischief.fc/mayhem.js">soap()</script>contentafter</p>', done)
   })
 
   it ('should parse scripts if said in app.set("layout extractScripts", true)', function(done) {
@@ -88,10 +74,8 @@ describe('parsing scripts', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithScript.ejs', { layout: 'layoutWithScript' })
     })
-    req(function(body){
-      body.should.equal('contentb4contentafter++<script href="http://mischief.fc/mayhem.js">soap()</script>')
-      done()
-    })
+
+    request(app).get('/').expect('contentb4contentafter++<script href="http://mischief.fc/mayhem.js">soap()</script>', done)
   })
 
   it ('should parse scripts if said in locals regardless of app.set("layout parse script", ...)', function(done) {
@@ -99,10 +83,8 @@ describe('parsing scripts', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithScript.ejs', { layout: 'layoutWithScript', extractScripts: true })
     })
-    req(function(body){
-      body.should.equal('contentb4contentafter++<script href="http://mischief.fc/mayhem.js">soap()</script>')
-      done()
-    })
+
+    request(app).get('/').expect('contentb4contentafter++<script href="http://mischief.fc/mayhem.js">soap()</script>', done)
   })
   
   it ("shouldn't complain even if there are no scripts in the view", function(done) {
@@ -110,10 +92,8 @@ describe('parsing scripts', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs', { layout: 'layoutWithScript', extractScripts: true })
     })
-    req(function(body){
-      body.should.equal('hi++')
-      done()
-    })
+
+    request(app).get('/').expect('hi++', done)
   })
 })
 
@@ -122,20 +102,16 @@ describe('rendering contentFor', function() {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithContentFor.ejs', { layout: 'layoutWithMultipleContent' })
     })
-    req(function(body){
-      body.should.equal('fight\\/club\nsomebody')
-      done()
-    })
+
+    request(app).get('/').expect('fight\\/club\nsomebody', done)
   })
   
   it ('should generate content speciffically for the body aswell', function(done) {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithContentForBody.ejs', { layout: 'layoutWithMultipleContent' })
     })
-    req(function(body){
-      body.should.equal('fight\\/club\nsomebody')
-      done()
-    })
+
+    request(app).get('/').expect('fight\\/club\nsomebody', done)
   })
 
   it ('should provide the locals to the layout aswell', function(done) {
@@ -143,10 +119,8 @@ describe('rendering contentFor', function() {
       res.render(__dirname + '/fixtures/view.ejs', 
         { layout: 'layoutWithMultipleContent', foo: 'oof', bar: 'rab' })
     })
-    req(function(body){
-      body.should.equal('rab\\/oof\nhi')
-      done()
-    })
+
+    request(app).get('/').expect('rab\\/oof\nhi', done)
   })
 })
 
