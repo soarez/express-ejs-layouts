@@ -7,6 +7,7 @@
   "main": "lib/express-layouts.js",
   "dependencies": {},
   "devDependencies": {
+    "express": "3.0.X",
     "supertest": "*",
     "ejs": "*",
     "mocha": "*",
