@@ -122,5 +122,24 @@ describe('rendering contentFor', function() {
 
     request(app).get('/').expect('rab\\/oof\nhi', done)
   })
+
+
+  it ('should respond with 500 error when trying to render a view that doesn\'t exist', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/imaginary.ejs', 
+        { layout: false })
+    })
+
+    request(app)
+      .get('/')
+      .expect(500)
+      .end(function(error, res) {
+        should.not.exist(error);
+        
+        res.serverError.should.be.true;
+
+        done();
+      })
+  })
 })
 
