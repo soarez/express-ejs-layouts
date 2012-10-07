@@ -1,5 +1,10 @@
+
+
+# express-ejs-layouts
+
+#### *Layout support for ejs in express.*
+
 [![build status](https://secure.travis-ci.org/Soarez/express-ejs-layouts.png)](http://travis-ci.org/Soarez/express-ejs-layouts)
-Layout support for ejs in express.
 
 ## Installation
     npm install express-ejs-layouts
@@ -21,7 +26,7 @@ Layout support for ejs in express.
 
     app.listen(3000)
 
-## contentFor
+### contentFor
 
 A view
 
@@ -41,7 +46,7 @@ Renders
     fight club
     somebody
 
-## script blocks extraction
+### script blocks extraction
 If you like to place all the script blocks at the end, you can do it like this:
 
     app.set("layout extractScripts", true)
@@ -74,3 +79,7 @@ Enabling invididually:
 Clone the rep
 
     make test
+
+## License
+
+MIT
