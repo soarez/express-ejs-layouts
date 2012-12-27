@@ -95,6 +95,22 @@ describe('parsing scripts', function() {
 
     request(app).get('/').expect('hi++', done)
   })
+
+  it('should parse multiple content sections', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithContentForBody.ejs', { layout: 'layoutWithMultipleContent' })
+    })
+
+    request(app).get('/').expect('fight\\/club\nsomebody', done)
+  });
+
+  it('should parse multiple content sections and a body', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithContentFor.ejs', { layout: 'layoutWithMultipleContent' })
+    })
+
+    request(app).get('/').expect('fight\\/club\nsomebody', done)
+  });  
 })
 
 describe('rendering contentFor', function() { 
