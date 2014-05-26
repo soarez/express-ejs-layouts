@@ -46,7 +46,8 @@ Renders
     fight club
     somebody
 
-### script blocks extraction
+### Script blocks extraction
+
 If you like to place all the script blocks at the end, you can do it like this:
 
     app.set("layout extractScripts", true)
@@ -74,6 +75,30 @@ Renders
 Enabling invididually:
 
     req.render('view', { parseScript: true })
+
+## Optional sections
+
+In a layout, you can have optional sections using `defineContent`:
+Unspecified section content defaults to `''`.
+
+
+    1
+    <%-defineContent('a')%>
+    2
+    <%-defineContent('b')%>
+    3
+
+with a view:
+
+    <%- contentFor('a') %>
+    1.5
+
+will render:
+
+    1
+    1.5
+    2
+    3
 
 ## Running tests
 Clone the rep

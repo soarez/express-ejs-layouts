@@ -159,3 +159,13 @@ describe('rendering contentFor', function() {
   })
 })
 
+describe('defining sections with defineContent', function() { 
+  it ('should provide a function in the layout to define optional sections', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithPartialContent.ejs', { layout: 'layoutWithDefineContent' })
+    })
+
+    request(app).get('/').expect(/tyler durden\nis\n\nreal\n*/, done)
+  })
+})
+
