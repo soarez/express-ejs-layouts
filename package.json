@@ -2,8 +2,12 @@
   "author": "Igor Soarez <igorsoarez@gmail.com>",
   "name": "express-ejs-layouts",
   "description": "Layout support for ejs in express.",
-  "keywords": ["express", "layout", "ejs"],
-  "version": "0.3.0",
+  "keywords": [
+    "express",
+    "layout",
+    "ejs"
+  ],
+  "version": "1.0.0",
   "main": "lib/express-layouts.js",
   "dependencies": {},
   "devDependencies": {
