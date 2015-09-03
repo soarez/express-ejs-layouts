@@ -76,6 +76,14 @@ Enabling invididually:
 
     req.render('view', { parseScript: true })
 
+### Style blocks extraction
+
+Works exactly like script blocks extraction except:
+
+* Supported tags are ``<link rel="stylesheet" …>`` and ``<style …>``
+* The option is named ``parseStyle``
+* The template variable in layout is ``style``
+
 ## Optional sections
 
 In a layout, you can have optional sections using `defineContent`:
