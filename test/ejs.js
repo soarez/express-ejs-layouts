@@ -32,7 +32,7 @@ describe('not using layout', function() {
   })
 })
 
-describe('simple layout', function() { 
+describe('simple layout', function() {
   it('should look for template named "layout" by default', function(done) {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/view.ejs')
@@ -60,13 +60,13 @@ describe('simple layout', function() {
   })
 })
 
-describe('parsing scripts', function() { 
+describe('parsing scripts', function() {
   it ('should not parse scripts by default', function(done) {
     app.use(function(req, res){
-      res.render(__dirname + '/fixtures/viewWithScript.ejs', 'layoutWithScript')
+      res.render(__dirname + '/fixtures/viewWithScript.ejs', { layout: 'layoutWithScript' })
     })
 
-    request(app).get('/').expect('<p>contentb4<script href="http://mischief.fc/mayhem.js">soap()</script>contentafter</p>', done)
+    request(app).get('/').expect('contentb4<script href="http://mischief.fc/mayhem.js">soap()</script>contentafter++', done)
   })
 
   it ('should parse scripts if said in app.set("layout extractScripts", true)', function(done) {
@@ -86,7 +86,7 @@ describe('parsing scripts', function() {
 
     request(app).get('/').expect('contentb4contentafter++<script href="http://mischief.fc/mayhem.js">soap()</script>', done)
   })
-  
+
   it ("shouldn't complain even if there are no scripts in the view", function(done) {
     app.set("layout extractScripts", true)
     app.use(function(req, res){
@@ -110,10 +110,47 @@ describe('parsing scripts', function() {
     })
 
     request(app).get('/').expect('fight\\/club\nsomebody', done)
-  });  
+  });
 })
 
-describe('rendering contentFor', function() { 
+describe('parsing styles', function() {
+  it ('should not parse styles by default', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithStyle.ejs', { layout: 'layoutWithStyle' })
+    })
+
+    request(app).get('/').expect('contentb4<link rel="stylesheet" href="/path/to/file.css"><link rel="stylesheet" href="/path/to/file2.css"></link><style>body{}</style>content after\n++\n', done)
+  })
+
+  it ('should parse styles if said in app.set("layout extractStyles", true)', function(done) {
+    app.set("layout extractStyles", true)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithStyle.ejs', { layout: 'layoutWithStyle' })
+    })
+
+    request(app).get('/').expect('contentb4content after\n++<link rel="stylesheet" href="/path/to/file.css">\n<link rel="stylesheet" href="/path/to/file2.css"></link>\n<style>body{}</style>\n', done)
+  })
+
+  it ('should parse styles if said in locals regardless of app.set("layout parse script", ...)', function(done) {
+    app.set("layout extractStyles", false)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithStyle.ejs', { layout: 'layoutWithStyle', extractStyles: true })
+    })
+
+    request(app).get('/').expect('contentb4content after\n++<link rel="stylesheet" href="/path/to/file.css">\n<link rel="stylesheet" href="/path/to/file2.css"></link>\n<style>body{}</style>\n', done)
+  })
+
+  it ("shouldn't complain even if there are no styles in the view", function(done) {
+    app.set("layout extractStyles", true)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/view.ejs', { layout: 'layoutWithStyle', extractStyles: true })
+    })
+
+    request(app).get('/').expect('hi++\n', done)
+  })
+})
+
+describe('rendering contentFor', function() {
   it ('should provide a local function to specify content to be available in a local in the layout', function(done) {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithContentFor.ejs', { layout: 'layoutWithMultipleContent' })
@@ -121,7 +158,7 @@ describe('rendering contentFor', function() {
 
     request(app).get('/').expect('fight\\/club\nsomebody', done)
   })
-  
+
   it ('should generate content speciffically for the body aswell', function(done) {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithContentForBody.ejs', { layout: 'layoutWithMultipleContent' })
@@ -132,7 +169,7 @@ describe('rendering contentFor', function() {
 
   it ('should provide the locals to the layout aswell', function(done) {
     app.use(function(req, res){
-      res.render(__dirname + '/fixtures/view.ejs', 
+      res.render(__dirname + '/fixtures/view.ejs',
         { layout: 'layoutWithMultipleContent', foo: 'oof', bar: 'rab' })
     })
 
@@ -142,7 +179,7 @@ describe('rendering contentFor', function() {
 
   it ('should respond with 500 error when trying to render a view that doesn\'t exist', function(done) {
     app.use(function(req, res){
-      res.render(__dirname + '/fixtures/imaginary.ejs', 
+      res.render(__dirname + '/fixtures/imaginary.ejs',
         { layout: false })
     })
 
@@ -151,7 +188,7 @@ describe('rendering contentFor', function() {
       .expect(500)
       .end(function(error, res) {
         should.not.exist(error);
-        
+
         res.serverError.should.be.true;
 
         done();
@@ -159,7 +196,7 @@ describe('rendering contentFor', function() {
   })
 })
 
-describe('defining sections with defineContent', function() { 
+describe('defining sections with defineContent', function() {
   it ('should provide a function in the layout to define optional sections', function(done) {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithPartialContent.ejs', { layout: 'layoutWithDefineContent' })

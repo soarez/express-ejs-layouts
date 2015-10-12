@@ -74,7 +74,15 @@ Renders
 
 Enabling invididually:
 
-    req.render('view', { parseScript: true })
+    req.render('view', { extractScripts: true })
+
+### Style blocks extraction
+
+Works exactly like script blocks extraction except:
+
+* Supported tags are ``<link rel="stylesheet" …>`` and ``<style …>``
+* The option is named ``extractStyles``
+* The template variable in layout is ``style``
 
 ## Optional sections
 
