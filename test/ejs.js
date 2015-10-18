@@ -96,6 +96,15 @@ describe('parsing scripts', function() {
     request(app).get('/').expect('hi++', done)
   })
 
+  it ('should extract mixed type scripts', function(done) {
+    app.set('layout extractScripts', true)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithMixedScripts.ejs', { layout: 'layoutWithScript' })
+    })
+
+    request(app).get('/').expect('<div>foo</div>\n\n\n\n<div>bar</div>\n++<script src="i-need-a-file.js"></script>\n<script>\n    // I\'m a script block\n</script>\n<script type="application/javascript" src="i-need-another-file.js"></script>', done)
+  })
+
   it('should parse multiple content sections', function(done) {
     app.use(function(req, res){
       res.render(__dirname + '/fixtures/viewWithContentForBody.ejs', { layout: 'layoutWithMultipleContent' })
