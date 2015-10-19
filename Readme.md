@@ -4,7 +4,7 @@
 
 #### *Layout support for ejs in express.*
 
-[![build status](https://secure.travis-ci.org/Soarez/express-ejs-layouts.png)](http://travis-ci.org/Soarez/express-ejs-layouts)
+[![build status](https://secure.travis-ci.org/Soarez/express-ejs-layouts.svg)](http://travis-ci.org/Soarez/express-ejs-layouts)
 
 ## Installation
     npm install express-ejs-layouts
