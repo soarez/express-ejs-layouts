@@ -26,7 +26,7 @@
 
     app.listen(3000)
 
-### contentFor
+### `contentFor`
 
 A view
 
@@ -45,6 +45,36 @@ Renders
 
     fight club
     somebody
+
+
+As another example, consider this view:
+
+```html
+foo
+<%- contentFor('pageSectionA') %>
+bar
+<%- contentFor('pageSectionB') %>
+baz
+```
+
+Using it with this layout:
+
+```html
+<div class="header"><%- pageSectionA %></div>
+<div class="body"><%- body %></div>
+<div class="footer"><%-defineContent('pageSectionB')%></div>
+```
+
+Will render:
+
+```html
+<div class="header">bar</div>
+<div class="body">foo</div>
+<div class="footer">baz</div>
+```
+
+Notice that the difference between using `<%- pageSectionA %>` and `<%-defineContent('pageSectionA')%>` is that the former will generate an error if the view doesn't define content for this section.
+
 
 ### Script blocks extraction
 
@@ -75,6 +105,44 @@ Renders
 Enabling invididually:
 
     req.render('view', { extractScripts: true })
+
+
+When the `"layout extractScripts"` option is activated, scripts defined in views will be extracted (won't be a part of `body`) and will be available for use in the layout through the variable `scripts`.
+
+Another example:
+
+This view:
+
+```html
+<script src="/b.js" />
+<div>foo</div>
+<script src="/a.js" />
+<div>bar</div>
+<script src="/c.js" />
+```
+
+Used with this layout:
+
+```html
+<div class="main">
+<%- body %>
+</div>
+<!-- place the scripts at the end of the html page -->
+<%- script %>
+```
+
+Will render:
+
+```html
+<div class="main">
+<div>foo</div>
+<div>bar</div>
+</div>
+<!-- place the scripts at the end of the html page -->
+<script src="/b.js" />
+<script src="/a.js" />
+<script src="/c.js" />
+```
 
 ### Style blocks extraction
 
