@@ -159,6 +159,43 @@ describe('parsing styles', function() {
   })
 })
 
+describe('parsing metas', function() {
+  it ('should not parse metas by default', function(done) {
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithMeta.ejs', { layout: 'layoutWithMeta' })
+    })
+
+    request(app).get('/').expect('++contentb4<meta name="charset" content="utf-8"><meta name="keywords" content="xyzzy" />content after\n\n', done)
+  })
+
+  it ('should parse metas if said in app.set("layout extractMetas", true)', function(done) {
+    app.set("layout extractMetas", true)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithMeta.ejs', { layout: 'layoutWithMeta' })
+    })
+
+    request(app).get('/').expect('<meta name="charset" content="utf-8">\n<meta name="keywords" content="xyzzy" />++contentb4content after\n\n', done)
+  })
+
+  it ('should parse metas if said in locals regardless of app.set("layout extractMetas", ...)', function(done) {
+    app.set("layout extractMetas", false)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/viewWithMeta.ejs', { layout: 'layoutWithMeta', extractMetas: true })
+    })
+
+    request(app).get('/').expect('<meta name="charset" content="utf-8">\n<meta name="keywords" content="xyzzy" />++contentb4content after\n\n', done)
+  })
+
+  it ("shouldn't complain even if there are no metas in the view", function(done) {
+    app.set("layout extractMetas", true)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/view.ejs', { layout: 'layoutWithMeta', extractMetas: true })
+    })
+
+    request(app).get('/').expect('++hi\n', done)
+  })
+})
+
 describe('rendering contentFor', function() {
   it ('should provide a local function to specify content to be available in a local in the layout', function(done) {
     app.use(function(req, res){
@@ -214,4 +251,3 @@ describe('defining sections with defineContent', function() {
     request(app).get('/').expect(/tyler durden\nis\n\nreal\n*/, done)
   })
 })
-

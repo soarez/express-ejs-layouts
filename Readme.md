@@ -171,6 +171,14 @@ Works exactly like script blocks extraction except:
 * The option is named `extractStyles`
 * The template variable in layout is `style`
 
+### Meta blocks extraction
+
+Works exactly like script blocks extraction except:
+
+* Supported tags are `<meta …>` and `<meta …/>`
+* The option is named `extractMetas`
+* The template variable in layout is `meta`
+
 ## Optional sections
 
 In a layout, you can have optional sections using `defineContent`:
