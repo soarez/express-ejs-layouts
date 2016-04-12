@@ -18,9 +18,6 @@
     "should": "*"
   },
   "optionalDependencies": {},
-  "engines": {
-    "node": "*"
-  },
   "scripts": {
     "test": "make test"
   },
