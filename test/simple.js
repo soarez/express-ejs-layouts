@@ -8,7 +8,7 @@ var app, req
 beforeEach(function() {
   app = express()
   app.use(expressLayouts)
-  app.set('env', 'test');
+  app.set('env', 'test')
   app.set('view engine', 'ejs')
   app.set('views', __dirname + '/fixtures')
 })
@@ -38,5 +38,30 @@ describe('simple layout', function() {
     })
 
     request(app).get('/').expect('<div>hi</div>', done)
+  })
+
+  it('should pass variables on to layouts', function(done) {
+    app.use(function(req, res) {
+      res.render(__dirname + '/fixtures/view.ejs', {
+        layout: 'layoutWithMultipleContent',
+        foo: 'foo',
+        bar: 'bar'
+      })
+    })
+
+    request(app).get('/').expect('bar\\/foo\nhi', done)
+  })
+
+  it('should pass res.locals on to layouts', function(done) {
+    app.use(function(req, res) {
+      res.locals = {
+        layout: 'layoutWithMultipleContent',
+        foo: 'one',
+        bar: 'two'
+      }
+      res.render(__dirname + '/fixtures/view.ejs')
+    })
+
+    request(app).get('/').expect('two\\/one\nhi', done)
   })
 })
