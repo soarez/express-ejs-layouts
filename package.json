@@ -19,7 +19,7 @@
   },
   "optionalDependencies": {},
   "scripts": {
-    "test": "make test"
+    "test": "mocha"
   },
   "repository": "git://github.com/Soarez/express-ejs-layouts.git"
 }
