@@ -13,21 +13,25 @@ $ npm install express-ejs-layouts
 ## Usage
 
 ```js
-var express = require('express')
-  , app = express()
-  , expressLayouts = require('express-ejs-layouts')
+var express = require('express');
+var expressLayouts = require('express-ejs-layouts');
 
-app.set('view engine', 'ejs')
-app.set('layout', 'myLayout') // defaults to 'layout'
+var app = express();
 
-app.use(expressLayouts)
-app.use(app.router)
+app.set('view engine', 'ejs');
 
-app.get('/', function(req, res){
-  res.render('aView', { layout: 'someSpecificLayout' })
-})
+app.use(expressLayouts);
 
-app.listen(3000)
+app.get('/', function(req, res) {
+  var locals = {
+    title: 'Page Title',
+    description: 'Page Description',
+    header: 'Page Header'
+  };
+  res.render('the-view', locals);
+});
+
+app.listen(3000);
 ```
 
 
