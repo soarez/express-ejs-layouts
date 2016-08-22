@@ -183,6 +183,26 @@ Works exactly like script blocks extraction except:
 * The option is named `extractMetas`
 * The template variable in layout is `meta`
 
+### Set custom default layout
+
+By default 'layout.ejs' is used. If you want to specify your custom
+layout (e.g. 'layouts/layout.ejs'), just set `layout` property in
+express app settings.
+
+```
+app.set('layout', 'layouts/layout');
+```
+
+### Set custom layout for single render
+
+Just pass `layout` as render locals object.
+
+```
+app.get('/', function(req, res) {
+  res.render('the-view', { layout: 'specific-layout' });
+);
+```
+
 ## Optional sections
 
 In a layout, you can have optional sections using `defineContent`:
