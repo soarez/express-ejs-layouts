@@ -10,9 +10,19 @@
 $ npm install express-ejs-layouts
 ```
 
+## Example
+
+Check the example folder.
+
+1. `git clone git@github.com:Soarez/express-ejs-layouts.git`
+2. `cd express-ejs-layouts`
+3. `npm install`
+4. `node example`
+5. Open http://localhost:3000/
+
 ## Usage
 
-```js
+```javascript
 var express = require('express');
 var expressLayouts = require('express-ejs-layouts');
 
@@ -40,7 +50,7 @@ app.listen(3000);
 A view
 
 ```ejs
-somebody
+tyler
 <%- contentFor('foo') %>
 club
 <%- contentFor('bar') %>
@@ -58,7 +68,7 @@ Renders
 
 ```
 fight club
-somebody
+tyler
 ```
 
 
@@ -95,7 +105,7 @@ Notice that the difference between using `<%- pageSectionA %>` and `<%-defineCon
 
 If you like to place all the script blocks at the end, you can do it like this:
 
-```js
+```javascript
 app.set("layout extractScripts", true)
 ```
 
@@ -116,7 +126,7 @@ With a layout
 
 Renders
 
-```ejs
+```html
 <body>
   somethingsomething
   <script>somejs<script>
@@ -125,7 +135,7 @@ Renders
 
 Enabling invididually:
 
-```js
+```javascript
 req.render('view', { extractScripts: true })
 ```
 
@@ -235,7 +245,7 @@ will render:
 
 ## Running tests
 
-Clone the rep and run:
+Clone the repo and run:
 
 ```sh
 $ make test
