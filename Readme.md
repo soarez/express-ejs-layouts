@@ -248,7 +248,7 @@ will render:
 Clone the repo and run:
 
 ```sh
-$ make test
+$ npm test
 ```
 
 ## License
