@@ -31,4 +31,21 @@ describe('not using layout', function() {
 
     request(app).get('/').expect('hi', done)
   })
+
+  it('should not use layouts if body is not a string', function(done) {
+    var jsonEngine = function(path, options, callback) {
+      require('fs').readFile(path, function (err, content) {
+        if (err) return callback(err)
+        return callback(null, JSON.parse(content.toString()))
+      })
+    }
+    app.engine('json', jsonEngine)
+
+    app.set('layout', true)
+    app.use(function(req, res){
+      res.render(__dirname + '/fixtures/view.json', { body: { foo: 'bar' } })
+    })
+
+    request(app).get('/').expect({}, done)
+  })
 })
