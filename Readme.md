@@ -2,6 +2,7 @@
 
 > Layout support for ejs in express
 
+[![npm version](https://badge.fury.io/js/express-ejs-layouts.svg)](https://badge.fury.io/js/express-ejs-layouts)
 [![build status](https://secure.travis-ci.org/Soarez/express-ejs-layouts.svg)](http://travis-ci.org/Soarez/express-ejs-layouts)
 
 ## Installation
