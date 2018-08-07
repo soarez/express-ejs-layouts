@@ -7,7 +7,7 @@
     "layout",
     "ejs"
   ],
-  "version": "2.4.0",
+  "version": "2.5.0",
   "main": "lib/express-layouts.js",
   "dependencies": {},
   "devDependencies": {
