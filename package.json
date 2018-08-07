@@ -13,7 +13,7 @@
   "devDependencies": {
     "express": "*",
     "supertest": "*",
-    "ejs": "*",
+    "ejs": "^2.6.1",
     "mocha": "*",
     "should": "*"
   },
