@@ -193,6 +193,7 @@ Works exactly like script blocks extraction except:
 * Supported tags are `<meta …>` and `<meta …/>`
 * The option is named `extractMetas`
 * The template variable in layout is `meta`
+* use `ignore-parse` attribute to ignore meta parsing.
 
 ### Set custom default layout
 
