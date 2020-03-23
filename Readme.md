@@ -213,6 +213,15 @@ app.get('/', function(req, res) {
   res.render('the-view', { layout: 'specific-layout' });
 );
 ```
+### Set no layout for single render
+
+Just pass `layout: false` as render locals object.
+
+```
+app.get('/', function(req, res) {
+  res.render('the-view', { layout: false });
+);
+```
 
 ## Optional sections
 
