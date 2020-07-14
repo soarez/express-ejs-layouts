@@ -15,7 +15,7 @@ $ npm install express-ejs-layouts
 
 Check the example folder.
 
-1. `git clone git@github.com:Soarez/express-ejs-layouts.git`
+1. `git clone git@github.com/Soarez/express-ejs-layouts.git`
 2. `cd express-ejs-layouts`
 3. `npm install`
 4. `node example`
