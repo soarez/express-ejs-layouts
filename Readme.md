@@ -134,7 +134,7 @@ Renders
 </body>
 ```
 
-Enabling invididually:
+Enabling individually:
 
 ```javascript
 req.render('view', { extractScripts: true })
