@@ -101,6 +101,35 @@ Will render:
 
 Notice that the difference between using `<%- pageSectionA %>` and `<%-defineContent('pageSectionA')%>` is that the former will generate an error if the view doesn't define content for this section.
 
+This can be used not only to fill large layout parts, but also for simple stuff, like setting page title:
+
+With this layout:
+
+```ejs
+<html>
+  <head>
+    <title><%- title %></title>
+  </head>
+  <body>
+    <%- body %>
+  </body>
+</html>
+```
+
+You can set page title by:
+
+```html
+foo
+<%- contentFor('title') %>
+Foo Page
+```
+
+Or if you would rather set title at the beginning of the view:
+
+```html
+<%- contentFor('title') %>Foo Page<%- contentFor('body') %>
+foo
+```
 
 ### Script blocks extraction
 
@@ -251,7 +280,6 @@ will render:
 2
 3
 ```
-
 
 ## Running tests
 
